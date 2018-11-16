@@ -70,9 +70,9 @@ export default {
       ],
       // 表单
       formLogin: {
-        username: 'admin',
-        password: 'admin',
-        code: 'v9am'
+        username: '',
+        password: '',
+        code: ''
       },
       // 校验
       rules: {

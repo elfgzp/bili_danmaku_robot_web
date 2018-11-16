@@ -1,5 +1,3 @@
-import demo from './modules/demo'
-
 import layoutHeaderAside from '@/layout/header-aside'
 
 const meta = { requiresAuth: true }
@@ -43,10 +41,25 @@ const frameIn = [
           },
           render: h => h()
         }
+      },
+      {
+        path: 'questions',
+        name: 'questions',
+        meta: {
+          title: '问题和答案'
+        },
+        component: () => import('@/pages/questions')
+      },
+      {
+        path: '/questions/:id',
+        name: 'newQuestion',
+        meta: {
+          title: '问题编辑'
+        },
+        component: () => import('@/pages/questionsEdit')
       }
     ]
-  },
-  demo
+  }
 ]
 
 /**

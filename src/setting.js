@@ -20,7 +20,7 @@ export default {
         name: 'index',
         meta: {
           title: '首页',
-          requiresAuth: false
+          requiresAuth: true
         }
       }
     ]
