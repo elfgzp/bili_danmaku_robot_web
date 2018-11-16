@@ -131,7 +131,8 @@ export default {
       return {
         search: this.search,
         page_size: this.pageSize,
-        page: this.currentPage
+        page: this.currentPage,
+        ordering: '-id'
       }
     }
   }
