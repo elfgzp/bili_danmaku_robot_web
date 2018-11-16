@@ -7,9 +7,19 @@ let baseUrl = '/'
 module.exports = {
   baseUrl: baseUrl, // 根据你的实际情况更改这里
   lintOnSave: true,
+  outputDir: 'dist',
+  assetsDir: 'static',
   devServer: {
     publicPath: baseUrl, // 和 baseUrl 保持一致
     proxy: {
+      '/gift': {
+        target: 'https://api.live.bilibili.com/gift',
+        ws: true,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/gift': ''
+        }
+      },
       '/api': {
         target: 'http://localhost:8088/api',
         ws: true,
