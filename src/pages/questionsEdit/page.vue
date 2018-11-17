@@ -5,10 +5,13 @@
                  :model="responseForm"
                  :rules="responseRules"
                  ref="responseForm"
-                 label-position="left"
+                 label-position="top"
         >
             <el-form-item label="问题" prop="statement">
-                <el-input v-model="responseForm.statement" :disabled="id !== 0" ref="questionInput"></el-input>
+                <el-autocomplete v-model="responseForm.statement" :disabled="id !== 0" ref="questionInput"
+                                 :fetch-suggestions="querySearchAsync" @select="handleSelect"
+                                 style="width: 100%"
+                ></el-autocomplete>
             </el-form-item>
             <el-form-item label="答案" prop="response">
                 <el-input v-model="responseForm.response"></el-input>
@@ -22,7 +25,7 @@
 </template>
 
 <script>
-import { createRsponse, getRsponseDetail } from '@/api/response'
+import { createRsponse, getRsponseDetail, getRsponsesList } from '@/api/response'
 
 export default {
   data () {
@@ -78,6 +81,21 @@ export default {
             this.responseForm.statement = res.statement
           })
       }
+    },
+    querySearchAsync (queryString, cb) {
+      getRsponsesList({
+        'statement__text': queryString
+      })
+        .then(res => {
+          console.log(res)
+          cb(res.results.map(value => {
+            value.value = value.statement
+            return value
+          }))
+        })
+    },
+    handleSelect (item) {
+      this.responseForm.response = item.response
     },
     questionInputFocus () {
       this.$refs['questionInput'].focus()
