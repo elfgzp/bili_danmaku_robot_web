@@ -10,6 +10,7 @@ module.exports = {
   outputDir: 'dist',
   assetsDir: 'static',
   devServer: {
+    disableHostCheck: true,
     publicPath: baseUrl, // 和 baseUrl 保持一致
     proxy: {
       '/gift': {
