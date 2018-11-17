@@ -27,6 +27,13 @@
                         inactive-color="#ff4949">
                 </el-switch>
             </el-form-item>
+            <el-form-item label="机器人测试（是否回答自己的问题）" prop="robotSelfDebug">
+                <el-switch
+                        v-model="settingsForm.robotSelfDebug"
+                        active-color="#13ce66"
+                        inactive-color="#ff4949">
+                </el-switch>
+            </el-form-item>
             <el-form-item label="合并感谢礼物" prop="mergeThankGift">
                 <el-select v-model="settingsForm.mergeThankGift" filterable multiple
                            value-key="value" placeholder="请选择">
@@ -68,6 +75,7 @@ export default {
         questionPrefix: '',
         confidence: '',
         mergeThankGift: [],
+        robotSelfDebug: true,
         questionRobot: false,
         thankGift: false
       },
@@ -110,6 +118,7 @@ export default {
           this.settingsForm.confidence = res.confidence
           let mergeThankGift = res.merge_thank_gift || ''
           this.settingsForm.mergeThankGift = mergeThankGift.length > 0 ? mergeThankGift.split(',') : []
+          this.settingsForm.robotSelfDebug = res.robot_self_debug
           this.settingsForm.questionRobot = res.question_robot
           this.settingsForm.thankGift = res.thank_gift
         })
@@ -123,6 +132,7 @@ export default {
             confidence: this.settingsForm.confidence,
             question_prefix: this.settingsForm.questionPrefix,
             merge_thank_gift: this.settingsForm.mergeThankGift.join(','),
+            robot_self_debug: this.settingsForm.robotSelfDebug,
             question_robot: this.settingsForm.questionRobot,
             thank_gift: this.settingsForm.thankGift
           })

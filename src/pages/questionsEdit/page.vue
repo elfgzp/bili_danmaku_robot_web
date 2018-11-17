@@ -4,17 +4,18 @@
         <el-form class="response-form"
                  :model="responseForm"
                  :rules="responseRules"
-                 ref="settingsForm"
+                 ref="responseForm"
                  label-position="left"
         >
             <el-form-item label="问题" prop="statement">
-                <el-input v-model="responseForm.statement" :disabled="id !== 0"></el-input>
+                <el-input v-model="responseForm.statement" :disabled="id !== 0" ref="questionInput"></el-input>
             </el-form-item>
             <el-form-item label="答案" prop="response">
                 <el-input v-model="responseForm.response"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="onSubmit">{{id !== 0 ? '创建': '保存'}}</el-button>
+                <el-button v-if="id === 0" type="primary" @click="onSubmitAndContinue">保存并继续添加</el-button>
             </el-form-item>
         </el-form>
     </d2-container>
@@ -50,12 +51,23 @@ export default {
     }
     this.loadReponse()
   },
+  mounted () {
+    this.questionInputFocus()
+  },
   methods: {
     onSubmit () {
       createRsponse(this.responseForm)
         .then(res => {
           this.$message.success('保存成功')
           this.$router.go(-1)
+        })
+    },
+    onSubmitAndContinue () {
+      createRsponse(this.responseForm)
+        .then(res => {
+          this.$message.success('保存成功')
+          this.$refs['responseForm'].resetFields()
+          this.questionInputFocus()
         })
     },
     loadReponse () {
@@ -66,6 +78,9 @@ export default {
             this.responseForm.statement = res.statement
           })
       }
+    },
+    questionInputFocus () {
+      this.$refs['questionInput'].focus()
     }
   },
   computed: {
